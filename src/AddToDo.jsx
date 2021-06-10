@@ -1,18 +1,25 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
 
 const AddToDo = ({ onSubmit }) => {
-  const [text, onChangeText] = useState("");
+  const [text, setText] = useState("");
   const pressHandler = () => {
-    onSubmit(text);
-    onChangeText("");
+    if (text.trim()) {
+      onSubmit(text);
+      setText("");
+    } else {
+      //error
+      Alert.alert("Enter task");
+    }
   };
   return (
     <View style={styles.block}>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeText}
+        onChangeText={setText}
         value={text}
+        placeholder="enter task"
+        autoCorrect={false}
       />
       <Button title="Add" style={styles.text} onPress={pressHandler} />
     </View>
